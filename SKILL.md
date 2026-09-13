@@ -12,7 +12,7 @@ Create a finished collectible card project. The skill has two production routes 
 Choose exactly one route before preparing assets:
 
 - **Holographic foil** is the default route for one character artwork. It uses separate `subject`, `background`, `lineart`, and `text` planes, plus foil and sparkle effects.
-- **Two-image lenticular** is the route for `光栅`, `翻转`, `双图`, `双形态`, or `一念神魔`. It uses two complete card artworks, A and B, and changes the whole card with viewing angle. Do not split one picture into left/right halves and do not fake the two states with SVG.
+- **Two-image lenticular** is the route for `光栅`, `翻转`, `双图`, `双形态`, or `一念神魔`. It uses two complete card artworks, A and B, and changes the whole card with the viewing angle. Do not split one picture into left/right halves and do not fake the two states with SVG.
 
 If the user asks for 一念神魔, route to lenticular automatically.
 
