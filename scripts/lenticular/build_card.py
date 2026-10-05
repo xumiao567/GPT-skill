@@ -2,6 +2,8 @@
 import bpy, math, json, sys
 from pathlib import Path
 from mathutils import Vector
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from blender_compat import configure_compositor
 
 args = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
 R = Path(args[0]).resolve() if args else Path.cwd()
@@ -304,9 +306,7 @@ def setopt(n, name, value):
     for s in n.inputs:
         if s.name.lower().replace(' ', '_') == name: s.default_value = value
 try:
-    scene.use_nodes = True; ct = scene.node_tree; ct.nodes.clear(); rl = node(ct, 'CompositorNodeRLayers', '渲染层', 0, 0); gl = node(ct, 'CompositorNodeGlare', '辉光 · 高质量', 250, 0); gl.glare_type = 'FOG_GLOW'
-    setopt(gl, 'quality', 'HIGH'); setopt(gl, 'threshold', 1.5); setopt(gl, 'size', 8)
-    co = node(ct, 'CompositorNodeComposite', '最终图像', 510, 0); link(ct, rl, 'Image', gl, 'Image'); link(ct, gl, 'Image', co, 'Image')
+    configure_compositor(scene)
 except Exception as e: print('Compositor glow skipped:', e)
 
 try: bpy.context.preferences.view.language = 'zh_HANS'

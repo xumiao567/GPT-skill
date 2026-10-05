@@ -1,6 +1,6 @@
 """Build a user-owned Blender/Three.js lenticular card project from a prepared frame pair."""
 from pathlib import Path
-import argparse, json, shutil, subprocess, os
+import argparse, json, shutil, subprocess, os, sys
 from ensure_blender import ensure_blender
 from validate_assets import validate
 from generate_typography import create
@@ -17,7 +17,7 @@ def main():
     validate(root); blender = ensure_blender(root, a.blender)
     env=os.environ.copy(); prefs=root/'tools/blender-config'; prefs.mkdir(parents=True,exist_ok=True); env['BLENDER_USER_CONFIG']=str(prefs)
     (root/'sources').mkdir(exist_ok=True)
-    subprocess.run([str(blender),'--background','--python-exit-code','1','--python',str(scripts/'prepare_fx.py'),'--',str(root)],check=True,env=env)
+    subprocess.run([sys.executable, str(scripts/'prepare_fx.py'), str(root)], check=True)
     cmd = [str(blender), '--background', '--factory-startup', '--python-exit-code', '1', '--python', str(scripts / 'build_card.py'), '--', str(root)]
     if a.skip_render: cmd.append('--skip-render')
     subprocess.run(cmd, check=True, env=env)
